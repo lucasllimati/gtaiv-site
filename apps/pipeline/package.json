@@ -1,0 +1,20 @@
+{
+  "name": "@pgi/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "collect": "tsx --env-file-if-exists=../../.env src/cli/collect.ts",
+    "export": "tsx --env-file-if-exists=../../.env src/cli/export.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@pgi/db": "^0.1.0",
+    "@pgi/shared": "^0.1.0",
+    "drizzle-orm": "^0.45.4",
+    "fast-xml-parser": "^5.11.2"
+  }
+}

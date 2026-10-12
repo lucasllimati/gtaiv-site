@@ -1,0 +1,37 @@
+{
+  "name": "project-gta-iv",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Portal editorial independente sobre GTA VI — notícias verificadas, guias, descobertas e ofertas.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @pgi/api & npm run dev -w @pgi/web",
+    "dev:api": "npm run dev -w @pgi/api",
+    "dev:web": "npm run dev -w @pgi/web",
+    "db:migrate": "npm run migrate -w @pgi/db",
+    "db:seed": "npm run seed -w @pgi/db",
+    "db:generate": "npm run generate -w @pgi/db",
+    "admin:create": "npm run admin:create -w @pgi/api --",
+    "pipeline": "npm run collect -w @pgi/pipeline",
+    "export": "npm run export -w @pgi/pipeline",
+    "build": "npm run build -w @pgi/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9",
+    "vitest": "^5.0.4"
+  }
+}

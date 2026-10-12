@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Project GTA IV</title>
+    <link>http://localhost:5173/</link>
+    <description>Notícias verificadas, guias e descobertas sobre GTA VI</description>
+    <language>pt-BR</language>
+    <lastBuildDate>Mon, 12 Oct 2026 18:09:57 GMT</lastBuildDate>
+    <item>
+      <title>Leonida: as regiões que a Rockstar já mostrou</title>
+      <link>http://localhost:5173/noticias/leonida-regioes-reveladas</link>
+      <guid isPermaLink="true">http://localhost:5173/noticias/leonida-regioes-reveladas</guid>
+      <pubDate>Mon, 12 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Guias</category>
+      <description>Vice City é a cidade mais conhecida, mas o estado fictício de Leonida tem outras regiões apresentadas oficialmente. Conheça cada uma.</description>
+    </item>
+    <item>
+      <title>GTA VI no PC: o que é fato e o que é especulação</title>
+      <link>http://localhost:5173/noticias/gta-vi-no-pc-fato-e-especulacao</link>
+      <guid isPermaLink="true">http://localhost:5173/noticias/gta-vi-no-pc-fato-e-especulacao</guid>
+      <pubDate>Mon, 12 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Rumores e teorias</category>
+      <description>Não há anúncio oficial de GTA VI para PC. O histórico da Rockstar sugere que uma versão pode vir depois, mas isso é uma hipótese, não informação confirmada.</description>
+    </item>
+    <item>
+      <title>Trailer 2 de GTA VI foi capturado dentro do jogo em um PS5, diz a Rockstar</title>
+      <link>http://localhost:5173/noticias/trailer-2-de-gta-vi-capturado-no-ps5</link>
+      <guid isPermaLink="true">http://localhost:5173/noticias/trailer-2-de-gta-vi-capturado-no-ps5</guid>
+      <pubDate>Mon, 12 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Notícias</category>
+      <description>Segundo a Rockstar, o segundo trailer de GTA VI foi gravado inteiramente dentro do jogo em um PlayStation 5, combinando gameplay e cenas de história.</description>
+    </item>
+    <item>
+      <title>Jason e Lucia: o que a Rockstar já revelou sobre os protagonistas</title>
+      <link>http://localhost:5173/noticias/jason-e-lucia-protagonistas-de-gta-vi</link>
+      <guid isPermaLink="true">http://localhost:5173/noticias/jason-e-lucia-protagonistas-de-gta-vi</guid>
+      <pubDate>Mon, 12 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Notícias oficiais</category>
+      <description>GTA VI terá dois protagonistas, Jason Duval e Lucia Caminos. Reunimos apenas o que foi apresentado pela Rockstar e separamos fatos de interpretação.</description>
+    </item>
+    <item>
+      <title>GTA VI chega em 19 de novembro de 2026: o que está confirmado</title>
+      <link>http://localhost:5173/noticias/gta-vi-lancamento-19-de-novembro-de-2026</link>
+      <guid isPermaLink="true">http://localhost:5173/noticias/gta-vi-lancamento-19-de-novembro-de-2026</guid>
+      <pubDate>Mon, 12 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Notícias oficiais</category>
+      <description>A Rockstar Games mantém o lançamento de Grand Theft Auto VI para 19 de novembro de 2026, no PlayStation 5 e no Xbox Series X|S. Veja como a data chegou até aqui.</description>
+    </item>
+  </channel>
+</rss>
