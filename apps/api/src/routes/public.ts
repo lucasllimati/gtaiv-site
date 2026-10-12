@@ -79,7 +79,7 @@ export async function publicRoutes(app: FastifyInstance, ctx: AppContext): Promi
     }
     if (!target) throw notFound('Link');
 
-    let referrerHost: string | null = null;
+    let referrerHost: string | null;
     try {
       referrerHost = req.headers.referer ? new URL(req.headers.referer).hostname.slice(0, 100) : null;
     } catch {

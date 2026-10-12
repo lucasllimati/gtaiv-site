@@ -1,0 +1,40 @@
+# Blueprint opcional para hospedar a API (que também serve o site e o painel) no Render.
+# O plano gratuito do Render hiberna após inatividade e tem disco efêmero: use Turso (DATABASE_URL)
+# e Cloudflare R2 (MEDIA_DRIVER=r2) para não perder dados.
+services:
+  - type: web
+    name: project-gta-iv
+    runtime: node
+    plan: free
+    buildCommand: npm ci && VITE_DATA_MODE=api npm run export && VITE_DATA_MODE=api npm run build
+    startCommand: npm run start -w @pgi/api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '24'
+      - key: WEB_DIST_DIR
+        value: apps/web/dist
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_AUTH_TOKEN
+        sync: false
+      - key: PUBLIC_API_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: MEDIA_DRIVER
+        value: r2
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_PUBLIC_URL
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false

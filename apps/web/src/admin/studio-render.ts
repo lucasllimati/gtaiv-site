@@ -103,12 +103,29 @@ export async function drawArt(canvas: HTMLCanvasElement, fmt: { w: number; h: nu
   const base = Math.min(fmt.w, fmt.h);
   const headSize = Math.round(base * (landscape ? 0.085 : fmt.h / fmt.w > 1.5 ? 0.095 : 0.088));
 
+  // Bloco de texto calculado de baixo para cima: termina acima do rodapé e
+  // reduz a fonte até caber, para nunca sobrepor a marca.
+  const lh = base * 0.06;
+  const kickerSize = Math.round(base * 0.034);
+  const footerTop = fmt.h - pad - base * 0.1;
+  const maxBlock = footerTop - pad * 1.2 - (landscape ? 0 : fmt.h * 0.18);
+  const specH = input.speculative ? base * 0.06 : 0;
+  let size = headSize;
+  let lines: string[] = [];
+  let blockH = 0;
+  for (let i = 0; i < 12; i++) {
+    ctx.font = `900 ${size}px "Montserrat Variable", sans-serif`;
+    lines = wrapLines(ctx, input.headline, textW, landscape ? 4 : 5);
+    blockH = lh + base * 0.045 + kickerSize * 0.4 + lines.length * size * 1.08 + specH;
+    if (blockH <= maxBlock) break;
+    size = Math.round(size * 0.9);
+  }
+  let y = landscape ? (fmt.h - blockH) / 2 - base * 0.04 : footerTop - base * 0.06 - blockH;
+
   // Selo de status
   ctx.font = `800 ${Math.round(base * 0.032)}px "Inter Variable", sans-serif`;
   const label = input.statusLabel.toUpperCase();
   const lw = ctx.measureText(label).width + base * 0.05;
-  const lh = base * 0.06;
-  let y = landscape ? fmt.h * 0.3 : fmt.h * (fmt.h / fmt.w > 1.5 ? 0.52 : 0.42);
   roundRect(ctx, pad, y, lw, lh, lh / 2);
   ctx.fillStyle = input.statusColor;
   ctx.fill();
@@ -116,21 +133,20 @@ export async function drawArt(canvas: HTMLCanvasElement, fmt: { w: number; h: nu
   ctx.textBaseline = 'middle';
   ctx.fillText(label, pad + base * 0.025, y + lh / 2 + 1);
 
-  // Kicker
+  // Chamada
   y += lh + base * 0.045;
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#00e5ff';
-  ctx.font = `800 ${Math.round(base * 0.034)}px "Montserrat Variable", sans-serif`;
+  ctx.font = `800 ${kickerSize}px "Montserrat Variable", sans-serif`;
   ctx.fillText(input.kicker.toUpperCase(), pad, y);
 
   // Manchete
-  ctx.font = `900 ${headSize}px "Montserrat Variable", sans-serif`;
+  ctx.font = `900 ${size}px "Montserrat Variable", sans-serif`;
   ctx.fillStyle = '#ffffff';
   ctx.shadowColor = 'rgba(0,0,0,0.5)';
   ctx.shadowBlur = 20;
-  const lines = wrapLines(ctx, input.headline, textW, landscape ? 4 : 5);
   for (const l of lines) {
-    y += headSize * 1.08;
+    y += size * 1.08;
     ctx.fillText(l, pad, y);
   }
   ctx.shadowBlur = 0;

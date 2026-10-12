@@ -12,7 +12,7 @@ import type { Config } from './config.ts';
 import { HttpError } from './lib/http.ts';
 import { requireAuth } from './plugins/auth.ts';
 import { AiService } from './services/ai.ts';
-import { createStorage, type MediaStorage } from './services/storage.ts';
+import { REPO_ROOT, createStorage, type MediaStorage } from './services/storage.ts';
 import { publicRoutes } from './routes/public.ts';
 import { authRoutes } from './routes/admin/auth.ts';
 import { articleRoutes } from './routes/admin/articles.ts';
@@ -141,17 +141,24 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
 
   // Quando o build do frontend estiver disponível, a API serve o site e o painel na mesma origem
   // (necessário para o cookie de sessão SameSite=Strict funcionar).
-  const webDist = config.WEB_DIST_DIR ? resolve(config.WEB_DIST_DIR) : null;
+  const webDist = config.WEB_DIST_DIR ? resolve(REPO_ROOT, config.WEB_DIST_DIR) : null;
   if (webDist && existsSync(resolve(webDist, 'index.html'))) {
     await app.register(fastifyStatic, { root: webDist, wildcard: false, index: false });
     app.get('/*', async (req, reply) => {
       const path = (req.params as { '*': string })['*'];
       if (path.startsWith('api/')) return reply.status(404).send({ error: 'Rota inexistente.' });
       const candidate = resolve(webDist, path);
-      if (path && candidate.startsWith(webDist) && existsSync(candidate) && !candidate.endsWith('\\') && path.includes('.')) {
-        return reply.sendFile(path);
+      if (!candidate.startsWith(webDist)) return reply.status(400).send();
+      if (path && path.includes('.') && existsSync(candidate)) {
+        const immutable = path.startsWith('assets/');
+        return reply.header('Cache-Control', immutable ? 'public, max-age=31536000, immutable' : 'public, max-age=300').sendFile(path);
       }
-      return reply.header('Cache-Control', 'no-cache').sendFile('index.html');
+      // Página pré-renderizada da rota (SEO), quando existir; senão o shell da SPA,
+      // que resolve a rota no navegador (inclui artigos publicados depois do build).
+      const clean = path.replace(/\/+$/, '');
+      const prerendered = `${clean}/index.html`;
+      const file = clean && existsSync(resolve(webDist, prerendered)) ? prerendered : 'index.html';
+      return reply.header('Cache-Control', 'no-cache').sendFile(file);
     });
   }
 

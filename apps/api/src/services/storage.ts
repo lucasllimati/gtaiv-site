@@ -12,7 +12,7 @@ export interface MediaStorage {
   read?(key: string): Promise<Buffer>;
 }
 
-const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
+export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
 
 /** Tipos aceitos, identificados pelos primeiros bytes do arquivo (não pela extensão enviada). */
 const SIGNATURES: { mime: string; ext: string; test: (b: Buffer) => boolean }[] = [

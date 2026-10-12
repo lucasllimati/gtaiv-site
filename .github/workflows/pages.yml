@@ -1,0 +1,65 @@
+name: Publicar site (GitHub Pages)
+
+# Gera o snapshot de conteúdo e publica a versão estática do site.
+# - push na main: republica após mudanças de código;
+# - repository_dispatch "content-updated": disparado pela API ao publicar conteúdo;
+# - agenda diária: mantém o snapshot e a contagem regressiva atualizados.
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [content-updated]
+  schedule:
+    - cron: '15 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Exportar snapshot de conteúdo
+        env:
+          # Com banco persistente (Turso), publica o conteúdo editorial real.
+          # Sem ele, usa o conteúdo-base versionado no repositório.
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          MEDIA_PUBLIC_URL: ${{ vars.MEDIA_PUBLIC_URL }}
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+        run: npm run export
+      - name: Build
+        env:
+          VITE_BASE: ${{ steps.pages.outputs.base_path }}/
+          VITE_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          VITE_DATA_MODE: snapshot
+          VITE_ADMIN_URL: ${{ vars.ADMIN_URL }}
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

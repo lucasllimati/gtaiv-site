@@ -15,3 +15,6 @@ test-results/
 .DS_Store
 *.log
 .wrangler/
+apps/web/public/robots.txt
+apps/web/public/rss.xml
+apps/web/public/sitemap.xml

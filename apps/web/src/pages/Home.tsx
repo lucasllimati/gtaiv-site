@@ -125,7 +125,9 @@ export function Home() {
 
   const featured = data.articles.find((a) => a.featured) ?? data.articles[0];
   const rest = data.articles.filter((a) => a !== featured);
-  const official = data.articles.filter((a) => a.category.slug === 'oficial' && a !== featured).slice(0, 3);
+  const latest = rest.slice(0, 6);
+  // Oficiais só entram se não estiverem já em destaque ou em "Últimas notícias".
+  const official = data.articles.filter((a) => a.category.slug === 'oficial' && a !== featured && !latest.includes(a)).slice(0, 3);
   const rumors = data.articles.filter((a) => ['rumor', 'theory'].includes(a.verificationStatus) || a.category.slug === 'rumores').slice(0, 3);
   const guideCount = (kind: string) => data.guide.filter((g) => g.kind === kind).length;
   const bySlot = (slot: 'home_primary' | 'home_secondary') => data.banners.find((b) => b.slot === slot);
@@ -192,7 +194,7 @@ export function Home() {
             <span id="ultimas" className="sr-only">Últimas notícias</span>
             {rest.length ? (
               <div className="grid grid--3">
-                {rest.slice(0, 6).map((a) => (
+                {latest.map((a) => (
                   <ArticleCard key={a.slug} article={a} />
                 ))}
               </div>

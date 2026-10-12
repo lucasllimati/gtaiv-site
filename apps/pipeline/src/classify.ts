@@ -10,13 +10,13 @@ const TOPICS: Record<string, RegExp> = {
   online: /\b(gta online|online mode|multiplayer|modo online)\b/i,
   preco: /\b(price|pre[çc]o|\$\d+|r\$|edition|edi[çc][ãa]o)\b/i,
   negocios: /\b(take-?two|earnings|investor|resultados financeiros|strauss zelnick|revenue)\b/i,
-  vazamento: /\b(leak|leaked|vazamento|vazad|insider|datamine)\b/i,
+  vazamento: /\b(leak(s|ed|er|ers)?|vazamento|vazad\w*|insider|datamine)\b/i,
 };
 
 /** Indícios de que a afirmação não está confirmada. */
 const UNCONFIRMED: [string, RegExp][] = [
   ['rumor', /\b(rumou?r|boato|rumores)\b/i],
-  ['vazamento', /\b(leak|leaked|vazamento|vazad)\b/i],
+  ['vazamento', /\b(leak(s|ed|er|ers)?|vazamento|vazad\w*)\b/i],
   ['insider', /\b(insider|according to (a )?source|sources say|segundo fontes|fontes afirmam|reportedly|supostamente|allegedly)\b/i],
   ['especulacao', /\b(could|might|may be|possibly|speculat|theor(y|ies)|teoria|pode ser|poderia|talvez)\b/i],
   ['nao-oficial', /\b(unconfirmed|n[ãa]o confirmad|not (yet )?confirmed)\b/i],

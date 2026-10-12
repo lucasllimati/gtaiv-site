@@ -259,7 +259,7 @@ export function templatePackage(
       s30: mk(30, sentences.slice(0, 2)),
       s60: mk(60, [...sentences.slice(0, 3), 'Fonte e detalhes completos no portal.']),
     },
-    coverSuggestion: { headline: truncate(a.title, 60), kicker: label.toUpperCase(), visualIdea: 'Fundo neon do portal, manchete em destaque e selo de verificação.' },
+    coverSuggestion: { headline: truncate(a.title, 60), kicker: 'GTA VI', visualIdea: 'Fundo neon do portal, manchete em destaque e selo de verificação.' },
     captions: {
       instagram: `${a.summary}\n\n${speculativeNotice ?? ''}\n${cta}\n\n#GTA6 #GTAVI #ViceCity`.replace(/\n{3,}/g, '\n\n'),
       tiktok: truncate(`${hook} ${cta} #GTA6 #GTAVI`, 150),

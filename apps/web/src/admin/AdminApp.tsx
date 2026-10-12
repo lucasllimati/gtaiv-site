@@ -170,7 +170,7 @@ export default function AdminApp() {
           </div>
           <nav>
             {MENU.filter((m) => can(m.perm)).map((m) => (
-              <NavLink key={m.to} to={m.to} end={m.end}>
+              <NavLink key={m.to} to={m.to ? `/admin/${m.to}` : "/admin"} end={m.end}>
                 {m.icon}
                 {m.label}
               </NavLink>

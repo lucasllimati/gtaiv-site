@@ -47,6 +47,7 @@ function atomLink(links: unknown): string {
 }
 
 export function parseFeed(xml: string): FeedEntry[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- estrutura de XML arbitrária, validada campo a campo abaixo
   const doc = parser.parse(xml) as Record<string, any>;
   const out: FeedEntry[] = [];
   const clean = (html: string, max: number) => {
@@ -54,6 +55,7 @@ export function parseFeed(xml: string): FeedEntry[] {
     return t ? truncate(t, max) : null;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rssItems: any[] = doc?.rss?.channel?.item ?? doc?.['rdf:RDF']?.item ?? [];
   for (const it of rssItems) {
     const link = Array.isArray(it.link) ? text(it.link[0]) : text(it.link);
@@ -70,6 +72,7 @@ export function parseFeed(xml: string): FeedEntry[] {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const atomEntries: any[] = doc?.feed?.entry ?? [];
   for (const it of atomEntries) {
     const url = atomLink(it.link).trim();

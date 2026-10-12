@@ -28,6 +28,7 @@ export function normalizeUrl(raw: string): string {
   url.protocol = 'https:';
   url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
   url.hash = '';
+  if (url.pathname.length > 1) url.pathname = url.pathname.replace(/\/+$/, '');
   const kept = [...url.searchParams.entries()]
     .filter(([k]) => !TRACKING_PARAMS.test(k))
     .sort(([a], [b]) => a.localeCompare(b));
